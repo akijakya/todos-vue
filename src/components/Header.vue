@@ -5,13 +5,9 @@
 </template>
 
 <script>
-import { defineComponent } from '@vue/composition-api'
-
-export default defineComponent({
-    setup() {
-        
-    },
-})
+export default {
+    name: 'Header',
+}
 </script>
 
 <style scoped>
