@@ -1,25 +1,22 @@
 <template>
   <div class="container">
     <Header @toggle-add-task="toggleAddTask" :showAddTask="showAddTask" title="Todos"/>
-    <!-- you can use v-if here as well -->
-    <div v-show="showAddTask">
-      <AddTask @add-task="addTask" />
-    </div>
-    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
+    <!-- you can pass down values to the views your router handles! -->
+    <router-view :showAddTask="showAddTask"></router-view>
+    <Footer />
   </div>
 </template>
 
 <script>
 import Header from './components/Header'
-import Tasks from './components/Tasks'
-import AddTask from './components/AddTask'
+import Footer from './components/Footer'
 
 export default {
   name: 'App',
+  // only include components in App.vue you want to have on every page of your site
   components: {
     Header,
-    Tasks,
-    AddTask
+    Footer
   },
   data() {
     return {
@@ -28,42 +25,9 @@ export default {
     }
   },
   methods: {
-    addTask(task) {
-      this.tasks = [...this.tasks, task]
-    },
-    deleteTask(id) {
-      if (confirm('Are you sure?'))
-      this.tasks = this.tasks.filter((task) => task.id !== id)
-    },
-    toggleReminder(id) {
-      // that part in the true branch retuns the task object with only the reminder changed
-      this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
-    },
     toggleAddTask() {
       this.showAddTask = !this.showAddTask
     }
-  },
-  created() {
-    this.tasks = [
-      {
-        id: 1,
-        text: 'valami',
-        day: 'March 1st at 2:30PM',
-        reminder: true,
-      },
-      {
-        id: 2,
-        text: 'másvalami',
-        day: 'March 3rd at 1:30PM',
-        reminder: true,
-      },
-      {
-        id: 3,
-        text: 'egyéb valami',
-        day: 'March 3rd at 11:00AM',
-        reminder: false,
-      },
-    ]
   }
 }
 </script>
